@@ -2,7 +2,7 @@
 Analyzing PII in API signature and payload
 
 ## Overview
-The tool takes a collection of input entries, each contains all the data elements of an API call (i.e. the URI, headers, payload of both the request and the response). It analyzes the data and search for possible private information (PII) by using regular expressions, a black list of suspicious argument names, and named entity recognition (NER) engine.
+The tool takes a collection of input entries, each contains all the data elements of an API call (i.e. the URI, headers, payload of both the request and the response). It analyzes the data and search for possible private information (PII) by using regular expressions, a black list of suspicious property names, and named entity recognition (NER) engine.
 The result is a JSON file with a per API call analysis that highlights all the possible private fields and their value. You can use the tool from the command line or call it from your python code. 
 
 
@@ -32,7 +32,7 @@ Usage
     default values:
     * **inputFile**: "input.json"
     * **oututFile**: "result.json"
-    * **privateArgFile**:  privateParamaters.json
+    * **privatePropFile**:  privateParamaters.json
 
 2. Command Line (set argumets)
     ````
@@ -49,7 +49,7 @@ Usage
     #### ApiPiiAnalyzer optional parameters: #### 
      
      * **regexFile**: File path to the json file containing the extra regex expressions that define piis.   
-     * **privateArgFile**:  File path to the json file containing the list parameters names that should be considered private. (default value: privateParamaters.json)
+     * **privatePropFile**:  File path to the json file containing the list property names that should be considered private. (default value: privateProperties.json)
      * **nerModelFileFile**: File path to the NER model file.
      * **nerJarFile**: File path to the NER engine jar.
 
@@ -65,14 +65,14 @@ Example:
             {"host": "v1"},
             {"agent": "v2"}
         ],
-        "body":{"ssn": 1, "n": "123-45-6789"}, <-- or a string payload -->
+        "body":{"ssn": 1, "n": "123-45-6789"}, 
         "responseHeaders":[
             {"h1": "v1"},
             {"h2": "v2"}
         ],
         "responseBody":{"ssn": 1, "n": "123-45-6789"}, <-- or a string payload --> 
 }, 
-{...}]
+{}]
 ```
 
 ## Regular Expression file
