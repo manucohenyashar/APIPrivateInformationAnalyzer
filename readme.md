@@ -2,13 +2,13 @@
 Analyzing PII in API signature and payload
 
 ## Overview
-The tool takes a collection of input entries, each contains all the data elements of an API call (i.e. the URI, headers, payload of both the request and the response). It analyzes the data and search for possible private information (PII) by using regular expressions, a black list of suspicious argument names, and named entity recognition (NER) engine.
+The tool takes a collection of input entries, each contains all the data elements of an API call (i.e. the URI, headers, payload of both the request and the response). It analyzes the data and search for possible private information (PII) by using regular expressions, a black list of suspicious properties names, and named entity recognition (NER) engine.
 The result is a JSON file with a per API call analysis that highlights all the possible private fields and their value. You can use the tool from the command line or call it from your python code. 
 
 
 Installation
 ------------
-Install from pypi using:
+Install from pip using:
 
     pip install -r requirements.txt
 
@@ -32,11 +32,11 @@ Usage
     default values:
     * **inputFile**: "input.json"
     * **oututFile**: "result.json"
-    * **privateArgFile**:  privateParamaters.json
+    * **privatePropFile**:  privateProperties.json
 
 2. Command Line (set argumets)
     ````
-    python apiPiiAnalyzer.py -i myinput.json -o result.json -r piiRegexs.json -a privateParamaters.json -j stanford-ner-2018-10-16/stanford-ner.jar -m stanford-ner-2018-10-16/classifiers/english.all.3class.distsim.crf.ser.gz
+    python apiPiiAnalyzer.py -i myinput.json -o result.json -r piiRegexs.json -a privateProperties.json -j stanford-ner-2018-10-16/stanford-ner.jar -m stanford-ner-2018-10-16/classifiers/english.all.3class.distsim.crf.ser.gz
     ````
 3. Python
 
@@ -49,7 +49,7 @@ Usage
     #### ApiPiiAnalyzer optional parameters: #### 
      
      * **regexFile**: File path to the json file containing the extra regex expressions that define piis.   
-     * **privateArgFile**:  File path to the json file containing the list parameters names that should be considered private. (default value: privateParamaters.json)
+     * **privatePropertiesFile**:  File path to the json file containing the list properties names that should be considered private. (default value: privateParamaters.json)
      * **nerModelFileFile**: File path to the NER model file.
      * **nerJarFile**: File path to the NER engine jar.
 
