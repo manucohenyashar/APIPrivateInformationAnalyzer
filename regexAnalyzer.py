@@ -64,7 +64,7 @@ class RegexAnalyzer(object):
                    v = re.compile(exp['expression'])                  
                    setattr(self, exp['name'], regex(v)(self))
 
-    def summary(self, text):
+    def analyze(self, text):
       res = {}
       for k,y in self.__dict__.items():
         method = getattr(self, k)
@@ -77,10 +77,4 @@ class RegexAnalyzer(object):
 
 
 
-if __name__ == '__main__':
-  t = RegexAnalyzer('piiRegexs.json')
-  res = t.summary('+33665840125')
-  
-  #res = t.summary('+33665840125 1-19-14')
-  print(res)
             

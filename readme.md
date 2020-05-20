@@ -19,7 +19,7 @@ Requirements
 * Java 8 +
 
 
-The analyzer uses the Stanford Named Entity Recognizer (NER). It can be downloaded here: http://nlp.stanford.edu/software/CRF-NER.shtml or just unzip the stanford-ner-2018-10-16.zip provided. This zip contains both the NER jar file (stanford-ner.jar) and the model file (english.all.3class.distsim.crf.ser.gz). No other installation is required to use the NER engine
+The analyzer uses the Stanford Named Entity Recognizer (NER). It can be downloaded [here](http://nlp.stanford.edu/software/CRF-NER.shtml) or just unzip the stanford-ner-2018-10-16.zip available [here](https://nlp.stanford.edu/software/CRF-NER.html#Download). This zip contains both the NER jar file (stanford-ner.jar) and the model file (english.all.3class.distsim.crf.ser.gz). No other installation is required to use the NER engine
 
 
 Usage
@@ -65,12 +65,12 @@ Example:
             {"host": "v1"},
             {"agent": "v2"}
         ],
-        "body":{"ssn": 1, "n": "123-45-6789"}, // or a string payload
+        "body":{"ssn": 1, "n": "123-45-6789"}, <-- or a string payload -->
         "responseHeaders":[
             {"h1": "v1"},
             {"h2": "v2"}
         ],
-        "responseBody":{"ssn": 1, "n": "123-45-6789"}, // or a string payload 
+        "responseBody":{"ssn": 1, "n": "123-45-6789"}, <-- or a string payload --> 
 }, 
 {...}]
 ```
@@ -85,9 +85,9 @@ Example:
 ]
 ```
 
-## Private arguments file
+## Private properties file
 
-With this file, you can introduce more argument names that should be considered as private data. The analyzer is inspecting all the names of the keys of key-value pairs in the input (e.g. headers) so that it will signal for every key that has a name that suggests the value is private information.
+With this file, you can introduce more property names that should be considered as private data. The analyzer is inspecting all the names of the keys of key-value pairs in the input (e.g. headers) so that it will signal for every key that has a name that suggests the value is private information.
 
 Example:
 ```json

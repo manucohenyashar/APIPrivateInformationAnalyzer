@@ -8,7 +8,7 @@ import json
 class ApiPiiAnalyzerTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.analyzer = ApiPiiAnalyzer()
+        self.analyzer = ApiPiiAnalyzer(regexFile="piiRegexs.json", privatePropFile="privateProperties.json" , nerJarFile=None, nerModelFileFile=None )
 
 class Test_Helpers(ApiPiiAnalyzerTestCase):
 
@@ -40,7 +40,7 @@ class Test_analyzeRequestUri(ApiPiiAnalyzerTestCase):
         actual = self.analyzer.analyzeRequestUri("GET https://localhost?ssn=123-56-4567")
         self.assertIn("ssn", actual.keys())       
         self.assertEqual(actual['ssn'][0]['ssn_number'], ['123-56-4567'])
-        self.assertEqual(actual['ssn'][1], 'paramName_contains-personalIdentification')
+        self.assertEqual(actual['ssn'][1], 'propertyName_contains-personalIdentification')
 
     def test_RequestUriWithoutPiis(self):
         actual = self.analyzer.analyzeRequestUri("GET https://localhost?p1=xyz")
@@ -59,7 +59,7 @@ class Test_analyzeRequestHeaders(ApiPiiAnalyzerTestCase):
         self.assertIn("n", actual.keys())
 
         self.assertEqual(actual['ipaddress'][0]['ips'], ['1.2.3.4']) 
-        self.assertEqual(actual['ipaddress'][1], 'paramName_contains-ip')  
+        self.assertEqual(actual['ipaddress'][1], 'propertyName_contains-ip')  
         self.assertEqual(actual['n']['ssn_number'], ['123-56-4567'])
 
     def test_headersWithNoPiis(self):
@@ -82,7 +82,7 @@ class Test_analyzeRequestPayload(ApiPiiAnalyzerTestCase):
         
         self.assertIn("ssn", actual.keys())       
         self.assertEqual(actual['ssn'][0]['ssn_number'], ['123-45-6789'])
-        self.assertEqual(actual['ssn'][1], 'paramName_contains-personalIdentification')    
+        self.assertEqual(actual['ssn'][1], 'propertyName_contains-personalIdentification')    
 
     def test_ListOfSimplePayloadWithPiis(self):
         body = [{"ssn": "123-45-6789"}, {"address": "23 main st"}] 
@@ -90,7 +90,7 @@ class Test_analyzeRequestPayload(ApiPiiAnalyzerTestCase):
         
         self.assertIn("ssn", actual.keys())       
         self.assertEqual(actual['ssn'][0]['ssn_number'], ['123-45-6789'])
-        self.assertEqual(actual['ssn'][1], 'paramName_contains-personalIdentification') 
+        self.assertEqual(actual['ssn'][1], 'propertyName_contains-personalIdentification') 
         self.assertEqual(actual['address'][0]['street_addresses'], ['23 main st'])       
          
 
@@ -101,7 +101,7 @@ class Test_analyzeRequestPayload(ApiPiiAnalyzerTestCase):
         
          self.assertIn("ssn", actual.keys())       
          self.assertEqual(actual['ssn'][0]['ssn_number'], ['123-45-6789'])
-         self.assertEqual(actual['ssn'][1], 'paramName_contains-personalIdentification')  
+         self.assertEqual(actual['ssn'][1], 'propertyName_contains-personalIdentification')  
 
 class Test_CompleteEntry(ApiPiiAnalyzerTestCase):
 
@@ -112,10 +112,10 @@ class Test_CompleteEntry(ApiPiiAnalyzerTestCase):
         #self.assertEqual(len(actual), 5)
 
         d0 = {'phone': {'phones': ['123-456-1111']}}
-        d1 = {'n': {'ssn_number': ['123-45-6789']}, 'ssn': 'paramName_contains-personalIdentification'}
-        d2 = {'ssn': 'paramName_contains-personalIdentification', 'n': {'ssn_number': ['123-45-6789']}}
-        d3 = {'n': {'ssn_number': ['123-45-6789']}, 'ssn': 'paramName_contains-personalIdentification'}
-        d4 = {'ssn': 'paramName_contains-personalIdentification', 'n': {'ssn_number': ['123-45-6789']}}
+        d1 = {'n': {'ssn_number': ['123-45-6789']}, 'ssn': 'propertyName_contains-personalIdentification'}
+        d2 = {'ssn': 'propertyName_contains-personalIdentification', 'n': {'ssn_number': ['123-45-6789']}}
+        d3 = {'n': {'ssn_number': ['123-45-6789']}, 'ssn': 'propertyName_contains-personalIdentification'}
+        d4 = {'ssn': 'propertyName_contains-personalIdentification', 'n': {'ssn_number': ['123-45-6789']}}
 
         self.assertEqual(actual[0]['id'], 'GET http://localhost/myapi/op1?phone=123-456-1111')
         self.assertEqual(actual[0]['uri_pii'], d0)
