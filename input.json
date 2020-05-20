@@ -1,0 +1,66 @@
+[
+    {
+        "uri":"GET http://localhost/myapi/op1?phone=123-456-1111",
+        "headers":[
+            {"host": "v1"},
+            {"agent": "v2"}
+        ],
+        "responseHeaders":[
+            {"h1": "v1"},
+            {"h2": "v2"}
+        ],
+        "responseBody":{"val1": 1, "val": 2}        
+    },
+    {
+        "uri":"POST http://localhost/myapi/op2",
+        "headers":[
+            {"ssn": "v1"},
+            {"n": "123-45-6789"}
+        ],
+        "body":"string payload",
+        "responseHeaders":[
+            {"h1": "v1"},
+            {"h2": "v2"}
+        ],
+        "responseBody":{"val1": 1, "val": 2} 
+    },
+    {
+        "uri":"PUT http://localhost/myapi/op3",
+        "headers":[
+            {"host": "v1"},
+            {"agent": "v2"}
+        ],
+        "body":{"ssn": 1, "n": "123-45-6789"},
+        "responseHeaders":[
+            {"h1": "v1"},
+            {"h2": "v2"}
+        ],
+        "responseBody":"payload" 
+    },
+    {
+        "uri":"PUT http://localhost/myapi/op4",
+        "headers":[
+            {"host": "v1"},
+            {"agent": "v2"}
+        ],
+        "body":{"p1": 1, "p2": 2},
+        "responseHeaders":[
+            {"ssn": "v1"},
+            {"n": "123-45-6789"}
+        ],
+        "responseBody":"payload" 
+    },
+    {
+        "uri":"PUT http://localhost/myapi/op5",
+        "headers":[
+            {"host": "v1"},
+            {"agent": "v2"}
+        ],
+        "body":{"p1": 1, "p2": 2},
+        "responseHeaders":[
+            {"h1": "v1"},
+            {"h2": "v2"}
+        ],
+        "responseBody":{"ssn": 1, "n": "123-45-6789"} 
+    }
+]
