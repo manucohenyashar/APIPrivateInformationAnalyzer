@@ -1,8 +1,0 @@
-{
-    "address": ["street", "city", "state", "country", "pob", "zip"],
-    "phone": ["cellular", "homeNumber", "cellNumber", "officenumber"],
-    "mail": ["email"],
-    "personalIdentification": ["ssn", "driverlicense"],
-    "financial": ["bank", "account", "routingnumber", "creditcard"],
-    "ip": ["ipaddress", "ipv6address"]  
-}
