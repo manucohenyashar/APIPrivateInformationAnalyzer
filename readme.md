@@ -49,7 +49,7 @@ Usage
     #### ApiPiiAnalyzer optional parameters: #### 
      
      * **regexFile**: File path to the json file containing the extra regex expressions that define piis.   
-     * **privatePropertiesFile**:  File path to the json file containing the list properties names that should be considered private. (default value: privateParamaters.json)
+     * **privatePropertiesFile**:  File path to the json file containing the list properties names that should be considered private. (default value: privateProperties.json)
      * **nerModelFileFile**: File path to the NER model file.
      * **nerJarFile**: File path to the NER engine jar.
 
