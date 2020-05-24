@@ -1,0 +1,10 @@
+Uri,Payload Area,Field,Identified Pii Type,Value,Field Name Category
+GET http://localhost/myapi/op1?phone=123-456-1111,uri_pii,phone,phones,['123-456-1111'],
+POST http://localhost/myapi/op2,req_header_pii,n,ssn_number,['123-45-6789'],
+POST http://localhost/myapi/op2,req_header_pii,ssn,,,personalIdentification
+PUT http://localhost/myapi/op3,req_payload_pii,ssn,,,personalIdentification
+PUT http://localhost/myapi/op3,req_payload_pii,n,ssn_number,['123-45-6789'],
+PUT http://localhost/myapi/op4,res_header_pii,n,ssn_number,['123-45-6789'],
+PUT http://localhost/myapi/op4,res_header_pii,ssn,,,personalIdentification
+PUT http://localhost/myapi/op5,res_payload_pii,ssn,,,personalIdentification
+PUT http://localhost/myapi/op5,res_payload_pii,n,ssn_number,['123-45-6789'],

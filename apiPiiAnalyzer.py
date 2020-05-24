@@ -5,6 +5,7 @@ from nerAnalyzer import NerAnalyzer
 import json
 import collections
 import optparse
+import csv
 
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
@@ -31,6 +32,39 @@ def is_json(myjson):
     return False
   return True
 
+def formatCsvRow(reqId, payloadArea, argName, argValue):
+    if (isinstance(argValue, list)):
+        row = {"Uri": reqId, "Payload Area": payloadArea, "Field": argName, "Identified Pii Type": list(argValue[0].keys())[0], "Value":list(argValue[0].values())[0], "Field Name Category": argValue[1][22:]}
+    elif (isinstance(argValue, dict)):
+        row = {"Uri": reqId, "Payload Area": payloadArea, "Field": argName, "Identified Pii Type": list(argValue.keys())[0], "Value":list(argValue.values())[0], "Field Name Category": ""}
+    elif (isinstance(argValue, str)):
+        row = {"Uri": reqId, "Payload Area": payloadArea, "Field": argName, "Identified Pii Type": "", "Value":"", "Field Name Category": argValue[22:]}
+    return row            
+
+
+def formatDicAsCsvRows(reults):
+    allRows = []
+    for resultEntry in reults:
+        reqId = resultEntry['id']
+        for payloadArea,identifiedValues in resultEntry.items():
+            if (isinstance(identifiedValues, dict)):
+                for argName, argValue in identifiedValues.items():
+                    allRows.append(formatCsvRow(reqId, payloadArea, argName, argValue))
+
+    return allRows     
+
+
+def saveAsCsv(results, filename):
+    columnsList = ["Uri", "Payload Area", "Field", "Identified Pii Type", "Value", "Field Name Category" ]
+    rows = formatDicAsCsvRows(results)
+
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=columnsList)
+        writer.writeheader()
+        for r in rows:
+            writer.writerow(r)
+
+
 class ApiPiiAnalyzer(object):
     def __init__(self, regexFile, privatePropFile, nerModelFileFile, nerJarFile):
         
@@ -53,8 +87,10 @@ class ApiPiiAnalyzer(object):
             pii_dic = self.regexAnalayzer.analyze(" ".join(arg_values))
             if (any(pii_dic)):
                 req_args_pii_dic[arg_name] = pii_dic
+            
+            req_args_pii_dic = MergeDictionaries(req_args_pii_dic, prop_pii_dic)
         
-        return MergeDictionaries(req_args_pii_dic, prop_pii_dic)
+        return req_args_pii_dic
     
     def analyzeHeaders(self, headers): 
         """finds the pii in the collection of headers
@@ -145,8 +181,9 @@ class ApiPiiAnalyzer(object):
 
                 if (any(record_pii.keys())):
                     res.append(record_pii)
-        return res    
-                
+        return res   
+
+               
 
 if __name__ == '__main__':
 
@@ -155,16 +192,23 @@ if __name__ == '__main__':
     parser.add_option('-r', '--regexFile', action="store", dest="regexFile", help="File path to the json file containing the extra regex expressions that define piis") #default="piiRegexs.json"
     parser.add_option('-a', '--privatePropFile', action="store", dest="privatePropFile", default="privateProperties.json", help="File path to the json file containing the list property names that should be considered private ")
     parser.add_option('-m', '--nerModelFileFile', action="store", dest="nerModelFileFile", help="File path to the NER model") #default="./Models/stanford-ner-2018-10-16/classifiers/english.all.3class.distsim.crf.ser.gz"
-    parser.add_option('-j', '--nerJarFile', action="store", dest="nerJarFile", help="File path to the NER engine jar") #default="./Models/stanford-ner-2018-10-16/stanford-ner.jar"
-    parser.add_option('-o', '--output', action="store", dest="out", default="result.json", help="output file")
+    parser.add_option('-j', '--nerJarFile', action="store", dest="nerJarFile", help="File path to the NER engine jar" ) #default="./Models/stanford-ner-2018-10-16/stanford-ner.jar"
+    parser.add_option('-o', '--output', action="store", dest="out", default="result.csv", help="output file")
     
     options, args = parser.parse_args()
 
     a = ApiPiiAnalyzer(options.regexFile, options.privatePropFile, options.nerModelFileFile, options.nerJarFile)
-    result = a.analyze(options.input)
+    results = a.analyze(options.input)
 
-    with open(options.out, 'w') as outfile:
-        json.dump(result, outfile)
+    if (options.out.endswith('.json')):
+        with open(options.out, 'w') as outfile:
+            json.dump(results, outfile)
+    
+    elif (options.out.endswith('.csv')):
+        saveAsCsv(results, options.out)
+    else:
+        print('output file must be a .json or .csv file')
+
 
 
 

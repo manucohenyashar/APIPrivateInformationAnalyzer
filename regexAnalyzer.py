@@ -68,7 +68,7 @@ class RegexAnalyzer(object):
       res = {}
       for k,y in self.__dict__.items():
         method = getattr(self, k)
-        values = method(text)
+        values = method(str(text))
         if any(values):
           res[k] = values
 

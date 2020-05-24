@@ -15,7 +15,7 @@ class NerAnalyzer:
     def analyze(self, text):
         result = {}
         if (text):
-            tags = self.st.tag(text.split())
+            tags = self.st.tag(str(text).split())
             personTags = [item[0] for item in tags if item[1] == 'PERSON']
             if (any(personTags)):
                 result['Person tags by NER'] = personTags

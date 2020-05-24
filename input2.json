@@ -1,0 +1,29 @@
+[
+    {
+        "uri":"POST http://localhost/myapi/op1?phone=123-456-1111&ssn=123-45-6789",
+        "headers":[
+            {"ssn": "123-45-6789"},
+            {"phone": "+1123-458-1234"}
+        ],
+        "body":{"adresss": 1, "ssn": "123-45-6789", "phone": "+1123-458-1234", "name": "john lennon"},
+        "responseHeaders":[
+            {"ssn": "123-45-6789"},
+            {"phone": "+1123-458-1234"}
+        ],
+        "responseBody":{"ssn": "123-45-6789", "address": 6789, "phone": "+1123-458-1234", "name": "john lennon"}        
+    },
+    {
+        "uri":"POST http://localhost/myapi/op2?phone=123-456-1111&ssn=123-45-6789",
+        "headers":[
+            {"ssn": "123-45-6789"},
+            {"phone": "+1123-458-1234"}
+        ],
+        "body":{"adresss": 1, "ssn": "123-45-6789", "phone": "+1123-458-1234", "name": "john lennon"},
+        "responseHeaders":[
+            {"ssn": "123-45-6789"},
+            {"phone": "+1123-458-1234"}
+        ],
+        "responseBody":{"ssn": "123-45-6789", "address": 6789, "phone": "+1123-458-1234", "name": "john lennon"}        
+    }
+    
+]

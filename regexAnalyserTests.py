@@ -6,8 +6,13 @@ import unittest
 class RegexTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.parser = RegexAnalyzer()
+        self.parser = RegexAnalyzer(regexfile="piiRegexs.json")
 
+class TestExteranlFileRegex(RegexTestCase):
+    def test_frenchPhoneNumber(self):
+        matching = ["+33665840125"]
+        for s in matching:
+            self.assertEqual(self.parser.frenchPhoneNumber(s), [s])
 
 class TestDates(RegexTestCase):
 
