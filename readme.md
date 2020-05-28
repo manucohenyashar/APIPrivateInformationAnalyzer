@@ -100,7 +100,7 @@ Example: This examples contains one record with pii in every segment
 
 
 ## Regular Expression file
-With this file, you can introduce more regular expressions and with that define new types of PII that the analyzer will look for. The following are supported out of the box: date, time, phone, phones_with_exts, link, email, ip, ipv6, price, hex color, credit card, btc address, street address, zip code, pob, ssn. If you need to extend this list use the Regular Expression file file as an extension point and add new regular expressions.
+With this file, you can introduce more regular expressions and with that define new types of PII that the analyzer will look for. The following are supported out of the box: date, time, phone, phones_with_exts, link, email, ip, ipv6, price, hex color, credit card, btc address, street address, zip code, pob, ssn. If you need to extend this list use the Regular Expression file as an extension point and add new regular expressions.
 
 Example:
 ```json
