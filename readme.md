@@ -56,6 +56,7 @@ Usage
 The results format is determined by the output file extension. If the output file has a 'json' extension results will be persisted as json. If he output file has a 'csv' extension results will be persisted as csv.  
 
 If nerModelFileFile and nerJarFile are left blank the NER engine will not run and the tool will run X60 faster.
+****
 ## Input file
 
 The input file contains a list of records, each captures all requests and response elements as shown below 
@@ -99,7 +100,7 @@ Example: This examples contains one record with pii in every segment
 
 
 ## Regular Expression file
-With this file, you can introduce more regular expressions and with that define new types of PII that the analyzer will look for.
+With this file, you can introduce more regular expressions and with that define new types of PII that the analyzer will look for. The following are supported out of the box: date, time, phone, phones_with_exts, link, email, ip, ipv6, price, hex color, credit card, btc address, street address, zip code, pob, ssn. If you need to extend this list use the Regular Expression file file as an extension point and add new regular expressions.
 
 Example:
 ```json
@@ -107,7 +108,7 @@ Example:
     {"name" : "frenchPhoneNumber", "expression" : "^(?:(?:\\+|00)33[\\s.-]{0,3}(?:\\(0\\)[\\s.-]{0,3})?|0)[1-9](?:(?:[\\s.-]?\\d{2}){4}|\\d{2}(?:[\\s.-]?\\d{3}){2})$"}
 ]
 ```
-
+****
 ## Private properties file
 
 With this file, you can introduce more property names that should be considered as private data. The analyzer is inspecting all the names of the keys of key-value pairs in the input (e.g. headers) so that it will signal for every key that has a name that suggests the value is private information.
@@ -123,7 +124,7 @@ Example:
     "ip": ["ipaddress", "ipv6address"]  
 }
 ```
-
+****
 ## Results file
 
 The results are written to a json or csv file that contains a list of the analytic that was computes for the inputs. One result per one input record. Each result record is identified by the request full uri. It contains the analysis for each part of the input payload (i.e. the uri, headers, payload of both the request and the response)
